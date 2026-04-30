@@ -23,12 +23,18 @@ Next.js is a full-stack framework designed to solve the inherent limitations of 
 - **`page.js` (The "What"):** Defines the unique content for a route.
 - **`layout.js` (The "Shell"):** Wraps pages with shared UI (header, footer). It persists across navigation, preventing unnecessary re-renders of the global UI.
 
-#### 3. React Server Components (RSC) — Under the Hood
-In Next.js, components are **Server Components by default**.
-- **Execution:** They execute only on the server (Node.js).
-- **Zero Bundle Size:** The JavaScript code for these components is never sent to the browser, significantly reducing the payload for the user.
-- **Security:** Allows for direct database access and secure handling of API keys (like OpenAI/AI keys) without exposing them to the client.
-- **JS Internals:** Uses the **V8 Engine** to compile JS into machine code on the server and the **RSC Protocol** to stream UI updates to the browser.
+#### 3. Dynamic Routes & Async Request APIs (Next.js 15/16+)
+- **Dynamic Segments:** Folders named `[slug]` or `[id]` act as variables for the URL.
+- **The `params` Promise:** In modern Next.js, `params` and `searchParams` are **Promises**. They must be "unwrapped" before use.
+- **Server Components:** Use `await params` inside an `async` function.
+- **Client Components:** Use the `use(params)` hook to unwrap the promise.
+- **Why?** This enables **Concurrent Rendering** and more efficient streaming, allowing the framework to prepare parts of the page while the URL is still being parsed.
+
+#### 4. React Server Components (RSC) — Under the Hood
+- **Execution:** Server Components execute only on the server (Node.js).
+- **Kitchen Analogy:** The server acts as the kitchen, preparing the full "dish" (UI) before sending it to the "table" (Browser).
+- **Zero Bundle Size:** Server-only code stays on the server, keeping the client-side JavaScript bundle tiny.
+- **Async Rendering:** Because RSCs are handled on the server, they can be `async` and `await` database/AI responses directly.
 
 #### 4. Node.js: The Foundation
 Next.js requires a **Node.js runtime** because it needs a JavaScript engine (V8) on the server to execute React components. 
