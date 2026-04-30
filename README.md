@@ -40,7 +40,21 @@ Next.js is a full-stack framework designed to solve the inherent limitations of 
 Next.js requires a **Node.js runtime** because it needs a JavaScript engine (V8) on the server to execute React components. 
 - **Non-blocking I/O:** Uses the **Event Loop** (via Libuv) to handle many concurrent requests efficiently, making it the perfect "glue" for modern web architectures.
 
-#### 5. The BFF (Backend For Frontend) Pattern
+#### 5. Navigation: Link vs. Standard Anchor
+- **`<Link>` (Client-Side Navigation):** Intercepts the click, changes the URL via the History API, and fetches only the **RSC Payload**.
+- **`<a>` (Full Page Reload):** Destroys all JavaScript state, fetches full HTML, and re-downloads all assets.
+- **Verification:** Check the Network Tab. A successful Next.js navigation shows a `fetch` request, not a `document` request.
+
+#### 6. Hydration & The Mismatch Pitfall
+- **The Handshake:** Hydration is the process where client-side React "attaches" to server-side HTML.
+- **Common Issue:** Browser extensions (like Bing or Grammarly) can inject attributes into the DOM before React hydrates, causing a **Hydration Mismatch**.
+- **The Senior Solution:** Apply `suppressHydrationWarning` to the `<body>` tag to allow these external modifications without breaking the client-side router.
+
+#### 7. Debugging the Development Environment
+- **Turbopack/Next Cache:** If you see internal "Manifest" or "Router" errors, the `.next` folder may be corrupted.
+- **Cleanup:** Force-delete the `.next` directory and restart the dev server (`rm -rf .next && npm run dev`) to resolve persistent environment bugs.
+
+#### 8. The BFF (Backend For Frontend) Pattern
 For complex applications (like those using a **Python AI backend**), Next.js acts as a **BFF**:
 - **Orchestration:** It bridges the gap between specialized microservices (Python, Go, Java) and the User Interface.
 - **Data Aggregation:** It fetches data from multiple sources server-side and sends a single, optimized package to the browser.
