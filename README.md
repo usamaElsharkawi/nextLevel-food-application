@@ -2,12 +2,16 @@
 
 ## Section 26: A (Pretty Deep Dive) Introduction to Next.js
 
+<details>
+<summary><b>Section Overview & Learning Goals</b></summary>
+
 ### Overview
 This section covers the core concepts of Next.js, moving from standard React Single Page Applications (SPAs) to a framework that supports Server-Side Rendering (SSR), Static Site Generation (SSG), and advanced routing mechanisms.
 
 ### Learning Goals & Product Engineer Mindset
 - **Why Next.js?** Understand the architectural shift and the problems Next.js solves (SEO, initial load time, routing) compared to vanilla React SPAs.
 - **Under the Hood:** How server components differ from client components.
+</details>
 
 ---
 
@@ -92,7 +96,7 @@ For complex applications (like those using a **Python AI backend**), Next.js act
 ### Senior Product Engineer Mindset
 
 <details>
-<summary><b>Architectural Ownership</b></summary>
+<summary><b>Architectural Strategy</b></summary>
 
 A senior developer doesn't just build components; they build **Architectures**. By using Next.js as a BFF, you ensure:
 - **Full-stack Ownership:** You control the entire user journey from data fetch to UI display.
