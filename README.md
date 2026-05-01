@@ -110,6 +110,26 @@ For complex applications (like those using a **Python AI backend**), Next.js act
 - **Performance:** This allows static parts of the page to stream to the user even earlier, significantly improving the perceived load time.
 </details>
 
+<details>
+<summary><b>11. Deep Dive: Server vs. Client Components</b></summary>
+
+#### The Core Difference
+- **Server Components (Default):** Execute **only** on the server. They have zero impact on the client-side bundle size and have direct access to backend resources (DB, File System).
+- **Client Components (`'use client'`):** Render on the server (initial HTML) and then **hydrate** in the browser. They are required for any interactivity, hooks, or browser-only APIs.
+
+#### Hydration (Statue to Robot)
+- **The Process:** Server sends static HTML (the statue). Browser downloads JS (the electricity). React "Hydrates" the HTML by attaching event listeners and initializing state, turning the static page into an interactive app (the robot).
+- **The Cost:** Hydration is CPU-intensive. Minimizing Client Components improves performance by reducing the hydration work the browser must perform.
+
+#### The Stateless Server
+- **Architecture:** Servers are **stateless**. They process a request and immediately "forget" the execution context. This is why hooks like `useState` and `useEffect` are not available on the server—there is no persistent memory or "re-render" cycle in a stateless environment.
+- **The Client's Role:** The browser provides the persistent environment (the event loop and memory) where state and effects can live and evolve over time.
+
+#### The `"use client"` Directive
+- **The Boundary:** It acts as a "Passport," marking the entry point where code is allowed to cross from the server into the browser bundle.
+- **The Cascade:** Once a file is marked with `"use client"`, all components imported into that file automatically become part of the client bundle.
+</details>
+
 ---
 
 ### Senior Product Engineer Mindset
