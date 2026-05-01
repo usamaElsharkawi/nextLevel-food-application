@@ -91,6 +91,25 @@ For complex applications (like those using a **Python AI backend**), Next.js act
 - **Streaming:** Supports streaming AI responses directly to the user as they are generated.
 </details>
 
+<details>
+<summary><b>10. Deep Dive: The Engine (Fiber, Concurrency, & Streaming)</b></summary>
+
+#### Fiber Architecture (The "Work Unit" Engine)
+- **Fiber vs. Stack:** The old "Stack" reconciler was synchronous and blocking. Fiber is a **Linked List of work units**, allowing React to process parts of the UI, pause for high-priority tasks (like user input), and resume later.
+- **Interruptible Rendering:** Fiber makes the rendering process asynchronous and interruptible, which is the foundation for all modern React features.
+
+#### Concurrent Rendering
+- **The "Parallel Brain":** React can work on multiple versions of the UI in memory simultaneously without blocking the main thread. It only "commits" the best version once it’s ready.
+
+#### Streaming & Selective Hydration
+- **The Pipeline:** Next.js uses Streaming to send HTML chunks to the browser as they are ready. This solves the "All or Nothing" problem where the user has to wait for a full page to load.
+- **Selective Hydration:** The browser can start making some parts of the page interactive (hydrating) while other parts are still being streamed from the server.
+
+#### Why Params are now Promises
+- **Unblocking the Server:** By making `params` and `searchParams` asynchronous Promises, Next.js can start executing the Page component **before** the URL parsing is fully complete. 
+- **Performance:** This allows static parts of the page to stream to the user even earlier, significantly improving the perceived load time.
+</details>
+
 ---
 
 ### Senior Product Engineer Mindset
