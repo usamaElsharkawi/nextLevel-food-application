@@ -130,6 +130,42 @@ For complex applications (like those using a **Python AI backend**), Next.js act
 - **The Cascade:** Once a file is marked with `"use client"`, all components imported into that file automatically become part of the client bundle.
 </details>
 
+<details>
+<summary><b>12. Data Management: SQLite & better-sqlite3</b></summary>
+
+#### The SQLite Architecture
+- **File-Based:** SQLite is not a server; it's a file (e.g., `meals.db`). It lives inside the project, making the application portable and fast.
+- **The "Excel on Steroids" Analogy:** It provides the power of SQL (Searching, Filtering, Relationships) with the simplicity of a local file.
+
+#### Why `better-sqlite3`?
+- **Speed:** It is the fastest SQLite library for Node.js.
+- **Synchronous API:** Since Server Components are already running in a Node.js environment, the synchronous nature of `better-sqlite3` is highly efficient, avoiding the overhead of complex Promise chains for simple local lookups.
+- **Security:** Built-in protection against SQL Injection using parameterized queries (`WHERE slug = ?`).
+
+#### The Single-User Database Pattern (The "WhatsApp" Logic)
+- **High Performance:** Databases like WhatsApp use local SQLite because there is **Zero Contention**. Only one person (the user) is writing to the file, so the database doesn't waste time "locking" rows for other users.
+- **Decentralized Privacy:** Data can be searched and processed locally without ever leaving the device.
+</details>
+
+<details>
+<summary><b>13. Data-Driven Feature Design</b></summary>
+
+#### Static vs. Data-Driven
+- **Static:** UI and Content are "glued" together. Changing text requires changing code.
+- **Data-Driven:** The UI is an **"Empty Picture Frame."** The code only defines the layout; the database "drives" the content.
+- **Scalability:** The same `MealsGrid` component can render 5 meals or 5,000 meals without the developer touching a single line of code.
+</details>
+
+<details>
+<summary><b>14. Optimized Media: The `fill` Attribute</b></summary>
+
+#### Why `fill`?
+- **Unknown Dimensions:** When images come from a database, we don't always know their width/height. `fill` tells the image to expand to its **Parent Container**.
+- **Responsive Control:** Moving the sizing responsibility to CSS (on the parent) allows for easy media queries.
+- **Parent Requirement:** The container must have `position: relative` (or absolute/fixed) and a defined `height`.
+- **`object-fit: cover`:** Always pair with `fill` to ensure images are cropped elegantly instead of stretched.
+</details>
+
 ---
 
 ### Senior Product Engineer Mindset
@@ -140,4 +176,5 @@ For complex applications (like those using a **Python AI backend**), Next.js act
 A senior developer doesn't just build components; they build **Architectures**. By using Next.js as a BFF, you ensure:
 - **Full-stack Ownership:** You control the entire user journey from data fetch to UI display.
 - **Clean Separation:** Keep heavy logic (AI/Calculations) in specialized services (Python) and use Next.js for world-class user experiences.
+- **Defensive Design:** Implementing `loading.js` and `error.js` to ensure the app remains stable even when the "Happy Path" fails.
 </details>
