@@ -184,6 +184,46 @@ For complex applications (like those using a **Python AI backend**), Next.js act
 - **`object-fit: cover`:** Always pair with `fill` to ensure images are cropped elegantly instead of stretched.
 </details>
 
+<details>
+<summary><b>16. The Mechanics of Streaming SSR</b></summary>
+
+#### The Conveyor Belt Model
+Next.js uses **HTTP Chunked Transfer Encoding** to send the page in pieces.
+1.  **The Shell:** The server sends the Header and CSS immediately (low TTFB).
+2.  **The Open Stream:** The connection remains open while the server performs slow tasks (like DB queries).
+3.  **The Swap (`$RS`):** Once data is ready, the server sends the final HTML in a hidden div and a tiny script (`$RS`) that swaps the "Loading" placeholder with the "Real Content" using pure DOM manipulation.
+
+#### Streaming vs. Hydration
+- **Streaming:** The process of delivering HTML content over an open connection.
+- **Hydration:** The process of the browser's JS engine "waking up" the HTML and attaching event listeners.
+</details>
+
+<details>
+<summary><b>17. Granular Suspense Boundaries</b></summary>
+
+#### The "Safety Net" Rule
+`<Suspense>` only works if the **async work** (the `await`) happens inside a **Child Component.**
+- **Correct Pattern:** Parent renders `<Suspense><Child /></Suspense>`. Child performs the `await`.
+- **Incorrect Pattern:** Parent performs the `await` then renders `<Suspense>`. This causes the entire page to block before it even reaches the Suspense boundary.
+</details>
+
+<details>
+<summary><b>18. Next.js 15: Router Cache & StaleTime</b></summary>
+
+#### Freshness by Default
+- **Next.js 14:** Dynamic pages were cached in the browser for **30 seconds** by default.
+- **Next.js 15:** Dynamic pages have a **0s StaleTime** by default. 
+- **The Result:** Clicking a `<Link>` in v15 triggers a fresh server request more often. To make it "Instant" like the course videos, we can use `export const revalidate = ...` to force a 5-minute cache in the browser.
+</details>
+
+<details>
+<summary><b>19. JS Chunks vs. Streaming Chunks</b></summary>
+
+#### Two Different Meanings of "Chunk"
+- **HTTP Stream Chunks:** Parts of the **same file** (the document) delivered over time.
+- **JS Bundle Chunks:** The application code split into **multiple small files** (e.g., `vendors.chunk.js`) for better caching and faster hydration.
+</details>
+
 ---
 
 ### Senior Product Engineer Mindset
