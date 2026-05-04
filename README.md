@@ -224,6 +224,34 @@ Next.js uses **HTTP Chunked Transfer Encoding** to send the page in pieces.
 - **JS Bundle Chunks:** The application code split into **multiple small files** (e.g., `vendors.chunk.js`) for better caching and faster hydration.
 </details>
 
+<details>
+<summary><b>20. Error Boundaries & The Client Requirement</b></summary>
+
+#### Why `error.js` must be a Client Component
+Error Boundaries are a **browser-only feature** in React.
+1.  **State Management:** An Error Boundary must change its internal state to "switch" from the crashed UI to the Fallback UI. State is only available in Client Components.
+2.  **Hydration Catching:** If a crash happens during the "Hydration" phase (in the browser), the server is already gone. Only a Client Component in the browser can intercept that crash.
+3.  **The `reset()` Pattern:** Next.js provides a `reset` function that triggers a re-render of the segment. This relies on client-side event handlers (`onClick`).
+</details>
+
+<details>
+<summary><b>21. Global vs. Local Not-Found</b></summary>
+
+#### The Hierarchy of 404s
+- **Global (`app/not-found.js`):** Catches invalid URLs (e.g., `/non-existent-route`).
+- **Local (`app/meals/[slug]/not-found.js`):** Catches missing resources. When a database query returns `null`, we manually trigger this using the `notFound()` function from `next/navigation`.
+</details>
+
+<details>
+<summary><b>22. Observability: The Three Pillars</b></summary>
+
+#### Moving Beyond `console.log`
+Professional engineering uses **Observability** to understand system health in production:
+1.  **Metrics (The Pulse):** Numeric data like "Average response time" or "Daily active users."
+2.  **Logging (The Diary):** Structured records of events (e.g., "User X successfully uploaded a recipe").
+3.  **Tracing (The GPS):** Tracking the path of a single request through different services (Next.js -> SQL -> S3) to find bottlenecks.
+</details>
+
 ---
 
 ### Senior Product Engineer Mindset
