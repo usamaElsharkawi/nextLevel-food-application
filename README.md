@@ -252,6 +252,43 @@ Professional engineering uses **Observability** to understand system health in p
 3.  **Tracing (The GPS):** Tracking the path of a single request through different services (Next.js -> SQL -> S3) to find bottlenecks.
 </details>
 
+<details>
+<summary><b>23. Dynamic Routing & Resource Validation</b></summary>
+
+#### The "Slug" Pattern
+1.  **Extraction:** Dynamic route parameters are passed as `params` (e.g., `{ mealSlug: 'burger' }`).
+2.  **Validation:** Always check if the resource exists. If `getMeal(slug)` returns `null`, manually trigger the `notFound()` function to switch to the nearest Not Found UI.
+3.  **Sanitization:** When rendering raw text with HTML (like `<br />`), use `dangerouslySetInnerHTML` only for trusted data to prevent XSS.
+</details>
+
+<details>
+<summary><b>24. The UI Proxy Pattern</b></summary>
+
+#### Beauty vs. Power
+Standard HTML elements (like `<input type="file">`) are powerful but hard to style.
+- **The Strategy:** Hide the powerful element and create a beautiful "Proxy" element (a button).
+- **The Bridge:** Use a `useRef` to target the hidden element and call its native `.click()` method programmatically when the Proxy is clicked.
+</details>
+
+<details>
+<summary><b>25. Memory Management: RAM vs. Disk</b></summary>
+
+#### The "Desk vs. Filing Cabinet" Analogy
+- **Hard Disk (Cabinet):** Slow, permanent storage where files live.
+- **RAM (Desk):** Fast, temporary memory where the browser "works" with data.
+- **`URL.createObjectURL`:** Pulls a file from the Disk into the RAM and creates a temporary "Pointer."
+- **The Senior Leak Fix:** Every "Pointer" locks a piece of RAM. Use `URL.revokeObjectURL` to release the memory when it's no longer needed (e.g., when a user picks a new image).
+</details>
+
+<details>
+<summary><b>26. The Lifecycle of an Event Object</b></summary>
+
+#### The "Police Report" of the Web
+1.  **Automatic Handover:** JavaScript automatically passes an `Event` object as the first argument to any handler (`onClick`, `onChange`).
+2.  **Targeting:** `event.target` is the specific element that triggered the action.
+3.  **Synthetic Events:** React wraps raw browser events in its own object to ensure cross-browser consistency (Chrome, Safari, Firefox).
+</details>
+
 ---
 
 ### Senior Product Engineer Mindset
