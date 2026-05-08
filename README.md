@@ -331,6 +331,22 @@ Standard HTML elements (like `<input type="file">`) are powerful but hard to sty
 - **Solution:** Use `revalidatePath('/meals')` to purge the cache and force Next.js to generate a fresh page with the latest database entries.
 </details>
 
+<details>
+<summary><b>32. Cloud Object Storage (AWS S3)</b></summary>
+
+#### The Production Reality
+- **The Problem:** Hosting platforms (Vercel, AWS, Heroku) use **Ephemeral File Systems**. Every time you deploy new code, your local `public/images` folder is wiped clean. 
+- **The Solution (The Infinite Warehouse):** Store images in an external **Object Storage** service like AWS S3.
+- **The Professional Workflow:**
+  1. **Upload:** Send the binary image from the Server Action to S3 using the AWS SDK.
+  2. **Link:** S3 returns a permanent URL (e.g., `https://bucket.s3.aws.com/meal.jpg`).
+  3. **Database:** Store the **URL string** in the database instead of a local file path.
+- **Benefits:**
+  - **Durability:** Images are never lost during server restarts.
+  - **Bandwidth:** Images are served by Amazon's fast global network, not your server.
+  - **Unlimited Space:** You pay only for what you use.
+</details>
+
 ---
 
 ### Senior Product Engineer Mindset
