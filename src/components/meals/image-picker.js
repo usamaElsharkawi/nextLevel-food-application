@@ -18,8 +18,6 @@ export default function ImagePicker({ label, name }) {
     }
     const filePreview = URL.createObjectURL(file);
     setPickedImage(filePreview);
-    console.log(file);
-    console.log(filePreview);
   }
   return (
     <div className={classes.picker}>
