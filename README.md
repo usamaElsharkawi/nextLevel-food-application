@@ -289,6 +289,48 @@ Standard HTML elements (like `<input type="file">`) are powerful but hard to sty
 3.  **Synthetic Events:** React wraps raw browser events in its own object to ensure cross-browser consistency (Chrome, Safari, Firefox).
 </details>
 
+<details>
+<summary><b>27. Server Actions (The Teleportation Pattern)</b></summary>
+
+#### Remote Procedure Calls (RPC)
+- **Concept:** Functions marked with `"use server"` that execute strictly on the server hard drive.
+- **The Proxy:** Next.js replaces the real function in the browser with a tiny "Proxy" that handles the network request (teleportation) for you.
+- **Benefit:** Progressive Enhancement. The form works even if JavaScript fails to load, using native browser submission.
+</details>
+
+<details>
+<summary><b>28. File System vs. Database</b></summary>
+
+#### The "Wallet vs. Bookshelf" Analogy
+- **Database (The Wallet):** Designed for small, structured data (Text, Numbers, IDs).
+- **File System (The Bookshelf):** Designed for large, unstructured binary data (Images, Videos).
+- **Senior Rule:** Never store images directly in a database (it causes bloat). Store the **Image File** on the disk and the **Path String** in the database.
+</details>
+
+<details>
+<summary><b>29. Security: The Second Wall</b></summary>
+
+#### XSS & Validation
+- **XSS (Cross-Site Scripting):** Malicious scripts injected into inputs. Use the `xss` package to "sanitize" instructions before saving.
+- **Server-Side Validation:** Never trust the browser. Always re-check for empty strings or invalid formats on the server, as client-side "required" attributes can be deleted by hackers.
+</details>
+
+<details>
+<summary><b>30. Form State Hooks</b></summary>
+
+#### Feedback & Observability
+- **`useActionState` (The Walkie-Talkie):** Creates a bridge to send messages (like "Invalid Input") back from the server to the client UI.
+- **`useFormStatus` (The Pending state):** Must be used in a child component of the form. It detects if the "hose" is currently busy so you can disable buttons.
+</details>
+
+<details>
+<summary><b>31. Cache Revalidation</b></summary>
+
+#### Fixing Stale Data
+- **Problem:** Next.js caches pages aggressively. After adding a new meal, the old list page is "Stale."
+- **Solution:** Use `revalidatePath('/meals')` to purge the cache and force Next.js to generate a fresh page with the latest database entries.
+</details>
+
 ---
 
 ### Senior Product Engineer Mindset
